@@ -1,35 +1,90 @@
-# Slate Frontend Test Assignment
+#State Manager
 
-You should spend no more than **4 hours** on this test assignment.
+## Introduction
 
-When you are done with the test, please send a link to your repo to your recruiter.  Thank you for your time and interest in Slate!
+This is a small state management library created using **react contextAPI**. Using this you can set and get state.
+Also you can getStore in any component by connecting your component with store.
 
-## Description
+## How to use
 
-For this test assignment, you will have to create your own simple state management library like Redux or MobX to handle events and store data across the application.
+Usage of this library is very easy.
 
-1. You should store your library code in the `/lib` folder of this repository.
-2. You are free to use any architecture pattern for designing your library. It can be **Flux**, **Redux**, **BloC**, etc.
-3. Your library should be integrated with a simple example app in `src` folder.
-    1. You should create a form component for creating a new incident
-    2. When an incident is created, an action must be dispatched notifying the rest of the app that a new incident is created
-    3. Home page should get a list of incident from your library's store instead of hardcoded values
-4. You should bring some essential styling to the app (currently it has no styling at all).
-    1. You can use any styling framework you want.
-    2. The information should be displayed appropriately on devices of all sizes
+You can create store by wrapping your main component in
+**createStore** HOC exported by library and make sure to pass intial state.
 
-## Evaluation
+~~~~
+import { createStore } from '../lib/stateManager'
 
-You will be judged by following criteria:
+class App extends React.Component{
+    ...
+}
 
-- Re-usability of your state management library
-- Amount of boilerplate code
-- Usage of new language and library features as you see fit
-- Component styling
-- Component breakdown (do not put everything into one big component, create a few smaller ones instead)
+const intialState = {
+    incidents:[]
+}
 
-## Start the development
+export createStore(App, initialState)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+~~~~
 
-Run `npm start` in the root of the project.
+Now you need to connect this store to component using **connectStore** in which you want stored state.
+
+~~~~
+
+import { connectStore } from '../lib/stateManager'
+
+class Incidents extends React.Component{
+    ...
+}
+
+const intialState = {
+    incidents:[]
+}
+
+export connectStore(Incidents)
+
+~~~~
+
+
+### Set state , get state and getStore
+
+When you connect component, connectStore HOC attaches store prop to your component's props which has methodes to set and get state.
+Also you can get whole store.
+
+##### Set state
+
+`store.set(key, value, callback)`
+
+~~~~
+
+this.props.store.set('incidents',[
+    {
+        title:'incident title',
+        assignee:'assignee name',
+        status:'Done'
+    }
+]);
+
+~~~~
+
+Note- here you can pass callback method to do any action after setting state in store.
+
+##### Get state
+
+`store.get(key)`
+
+~~~~
+
+const incidents = this.props.store.get('incidents');
+
+~~~~
+
+#### Get whole store
+
+`store.getState()`
+
+~~~~
+
+const wholeStore = this.props.store.getStore();
+
+~~~~
