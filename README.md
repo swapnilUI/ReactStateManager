@@ -1,9 +1,8 @@
-#State Manager
+# State Manager
 
 ## Introduction
 
-This is a small state management library created using **react contextAPI**. Using this you can set and get state.
-Also you can getStore in any component by connecting your component with store.
+This is a small state management library created using **react contextAPI**. By using this library you can set and get state by connecting your component with store.
 
 ## How to use
 
@@ -23,11 +22,11 @@ const intialState = {
     incidents:[]
 }
 
-export createStore(App, initialState)
+export default createStore(App, initialState)
 
 ~~~~
 
-Now you need to connect this store to component using **connectStore** in which you want stored state.
+Now you need to connect this store to component using **connectStore** HOC in which you want stored state.
 
 ~~~~
 
@@ -41,7 +40,7 @@ const intialState = {
     incidents:[]
 }
 
-export connectStore(Incidents)
+export default connectStore(Incidents)
 
 ~~~~
 
